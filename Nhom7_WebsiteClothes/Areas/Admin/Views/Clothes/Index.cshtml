@@ -1,0 +1,70 @@
+﻿@model PagedList.IPagedList<Nhom7_WebsiteClothes.Models.Cloth>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
+}
+
+<h2>Sản Phẩm</h2>
+<p>
+    @Html.ActionLink("Thêm mới sản phẩm", "Create")
+</p> 
+@using (Html.BeginForm("Search", "Clothes", FormMethod.Get))
+{
+    <input type="text" name="searchString" placeholder="Tìm kiếm sách, tác giả" />
+    <input type="submit" value="Search" />
+} <br />
+<table class="table">
+    <tr>
+        <th>
+            CategoryName
+        </th>
+        <th>
+            SizeName
+        </th>
+        <th>
+            Title
+        </th>
+        <th>
+            Description
+        </th>
+        <th>
+            Price
+        </th>
+        <th>
+            Image
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category.CategoryName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Size.SizeName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                <img style="align-self:center;" alt="@item.Title" src="~/Content/ImageClothes/@item.Image" width="125" height="150" />
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
+
+</table>
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page }))

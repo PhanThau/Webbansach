@@ -1,0 +1,17 @@
+﻿@model IEnumerable<Nhom7_WebsiteClothes.Models.Category>
+
+@*<h1>Chủ đề</h1>
+<ul>
+    @foreach (var item in Model)
+    {
+        <li>@Html.ActionLink(item.CategoryName, "GetClothByCategory/" + item.CategoryId, "Clothes") </li>
+    }
+</ul>*@
+@*=======================================================================================================*@
+@foreach (var category in Model)
+{
+    <li class="list-group-item">
+        @Html.ActionLink(category.CategoryName, "GetClothByCategory/"+ category.CategoryId, "Clothes")
+    </li>
+}
+@*===========================================================================================================*@

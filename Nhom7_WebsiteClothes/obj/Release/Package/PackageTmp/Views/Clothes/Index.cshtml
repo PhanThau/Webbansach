@@ -1,0 +1,35 @@
+﻿@model PagedList.IPagedList<Nhom7_WebsiteClothes.Models.Cloth>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br />
+@using (Html.BeginForm("Search", "Clothes", FormMethod.Get))
+{
+    <input type="text" name="searchString" placeholder="Tìm kiếm...." />
+    <input type="submit" value="Search" />
+
+}
+<br />
+<div class="product-grid">
+    @foreach (var item in Model)
+    {
+        <div class="product-item">
+            <div class="product-image-container">
+                <a href="@Url.Action("Details", "Clothes", new { id = item.Id })">
+                    <img class="product-image" alt="@item.Title" src="~/Content/ImageClothes/@item.Image" />
+                </a>
+            </div>
+            <div class="product-info">
+                <h3 class="product-title">@item.Title</h3>
+                <p class="product-price"><span class="product-price-label">Giá:</span> <span class="product-price-value">@item.Price VNĐ</span></p>
+            </div>
+        </div>
+    }
+</div>
+
+
+@Html.PagedListPager(Model, page => Url.Action(ViewBag.CategoryId == null ? "Index" : "GetClothByCategory", new { id = ViewBag.CategoryId, page = page }))
+

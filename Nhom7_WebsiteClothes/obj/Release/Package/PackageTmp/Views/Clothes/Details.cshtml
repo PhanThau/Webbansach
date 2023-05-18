@@ -1,0 +1,67 @@
+﻿@model Nhom7_WebsiteClothes.Models.Cloth
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script>
+    function increase() {
+        var input = document.getElementById("quantity");
+        var value = parseInt(input.value);
+        input.value = value + 1;
+    }
+
+    function decrease() {
+        var input = document.getElementById("quantity");
+        var value = parseInt(input.value);
+        if (value > 1) {
+            input.value = value - 1;
+        }
+    }
+    function addToCart() {
+        var clothesId = "@Model.Id";
+        var quantity = document.getElementById("quantity").value;
+        var url = "@Url.Action("AddToCart", "ShoppingCart")" + "?clothesId=" + clothesId + "&quantity=" + quantity;
+        window.location.href = url;
+    }
+</script>
+
+<h3>THÔNG TIN CHI TIẾT</h3>
+<div>
+    <div style="width:40%; float:left; border-left:dotted 1px; border-color:azure; padding-right:10px;">
+        <img alt="@Model.Title" src="~/Content/ImageClothes/@Model.Image" style="width:100%" />
+    </div>
+    <div style="width: 60%; float: left;">
+        <h4 style="font-weight: bold; color: black">@Model.Title</h4>
+        <p style="font-weight:bold">
+            Giá bán: <span style="color:red; font-size:16px">
+                @Model.Price
+                VNĐ
+            </span>
+        </p>
+        <p style="text-align:justify">
+            <span style="font-weight:bold">
+                Kích thước:
+            </span>@Model.Size.SizeName
+        </p>
+    </div>
+    <div>
+        <div>
+            <label style="font-weight:bold">Số lượng: </label>
+            <button id="minus" class="btn btn-secondary" onclick="decrease()">-</button>
+            <input id="quantity" type="number" min="1" value="1" style="width:50px; text-align:center">
+            <button id="plus" class="btn btn-secondary" onclick="increase()">+</button> <br /> <br />
+            <button onclick="addToCart()" class="btn btn-primary font-weight-bold">Thêm vào giỏ hàng</button>
+
+            @*@Html.ActionLink("Thêm vào giỏ hàng", "AddToCart", "ShoppingCart", new { clothesId = Model.Id }, new { @class = "btn btn-primary font-weight-bold" })*@
+        </div>
+    </div>
+    <div style="width: 60%; float: left; padding-top:10px;">
+        <p style="text-align:justify">
+            <span style="font-weight:bold">
+                @Model.Description
+
+            </span>
+        </p>
+    </div>
+</div>
